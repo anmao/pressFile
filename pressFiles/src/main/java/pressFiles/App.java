@@ -236,6 +236,11 @@ public final class App {
             e.printStackTrace();
         }
 
+        File outputFolder = new File(outputPath);
+        if (!outputFolder.exists() || !outputFolder.isDirectory()) {
+            outputFolder.mkdirs();
+        } 
+
         int[] totalFilesNumber = traverseFolder(inputPath, outputPath, pressFileNum, logger);
 
         System.out.println(

@@ -1,0 +1,29 @@
+09:48:24 [main] INFO  dailyLogger - Start Process.
+09:48:24 [main] INFO  dailyLogger - Press Start./pressResult/2018-12-30_2019-1-13.zip.
+09:48:24 [main] FATAL dailyLogger - java.io.FileNotFoundException: .\pressResult\2018-12-30_2019-1-13.zip (系统找不到指定的路径。)
+09:48:24 [main] INFO  dailyLogger - Press Finish./pressResult/2018-12-30_2019-1-13.zip.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Start.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Finish.
+09:48:24 [main] INFO  dailyLogger - Delete Empty Folder Start.
+09:48:24 [main] INFO  dailyLogger - Delete Folder Finish.
+09:48:24 [main] INFO  dailyLogger - Press Start./pressResult/2019-1-14_2019-1-28.zip.
+09:48:24 [main] FATAL dailyLogger - java.io.FileNotFoundException: .\pressResult\2019-1-14_2019-1-28.zip (系统找不到指定的路径。)
+09:48:24 [main] INFO  dailyLogger - Press Finish./pressResult/2019-1-14_2019-1-28.zip.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Start.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Finish.
+09:48:24 [main] INFO  dailyLogger - Delete Empty Folder Start.
+09:48:24 [main] INFO  dailyLogger - Delete Folder Finish.
+09:48:24 [main] INFO  dailyLogger - Press Start./pressResult/2019-1-29_2019-2-12.zip.
+09:48:24 [main] FATAL dailyLogger - java.io.FileNotFoundException: .\pressResult\2019-1-29_2019-2-12.zip (系统找不到指定的路径。)
+09:48:24 [main] INFO  dailyLogger - Press Finish./pressResult/2019-1-29_2019-2-12.zip.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Start.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Finish.
+09:48:24 [main] INFO  dailyLogger - Delete Empty Folder Start.
+09:48:24 [main] INFO  dailyLogger - Delete Folder Finish.
+09:48:24 [main] INFO  dailyLogger - Press Start./pressResult/2019-2-13_2019-2-27.zip.
+09:48:24 [main] FATAL dailyLogger - java.io.FileNotFoundException: .\pressResult\2019-2-13_2019-2-27.zip (系统找不到指定的路径。)
+09:48:24 [main] INFO  dailyLogger - Press Finish./pressResult/2019-2-13_2019-2-27.zip.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Start.
+09:48:24 [main] INFO  dailyLogger - Delete Source File Finish.
+09:48:24 [main] INFO  dailyLogger - Delete Empty Folder Start.
+09:48:24 [main] INFO  dailyLogger - Delete Folder Finish.
