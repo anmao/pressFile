@@ -5,6 +5,11 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
+
 /**
  * 压缩文件夹下的所有文件 并删除文件和空文件
  */
@@ -76,7 +81,7 @@ public final class App {
      * @param srcfile 源文件列表
      * @param zipfile 压缩后的文件
      */
-    public static void zipFiles(File[] srcfile, File zipfile) {
+    public static void zipFiles(File[] srcfile, File zipfile, Logger logger) {
         byte[] buf = new byte[1024];
         try {
             // ZipOutputStream类：完成文件或文件夹的压缩
@@ -92,9 +97,10 @@ public final class App {
                 in.close();
             }
             out.close();
-            System.out.println("压缩完成.");
+            logger.info("Function zipFiles Finish.");
         } catch (Exception e) {
             e.printStackTrace();
+            logger.fatal(e.toString());
         }
     }
 
@@ -105,7 +111,7 @@ public final class App {
      * @param outputPath   目的数据路径
      * @param pressFileNum 压缩文件阈值
      */
-    private static int[] traverseFolder(String inputPath, String outputPath, int pressFileNum) {
+    private static int[] traverseFolder(String inputPath, String outputPath, int pressFileNum, Logger logger) {
         int fileNum = 0, folderNum = 0;
         File inputFolder = new File(inputPath);
         Stack<File> visitStack = new Stack<>(); // 遍历用堆栈
@@ -115,6 +121,7 @@ public final class App {
             LinkedList<File> fileList = new LinkedList<>(); // 被压缩的文件列表
             List<File> fileSet = orderByName(inputFolder.listFiles());
             File tempFile;
+            logger.info("Start Process.");
 
             if (fileSet != null) {
                 // 深度优先遍历
@@ -153,12 +160,14 @@ public final class App {
                                 e.printStackTrace();
                             }
                         }
-                        System.out.println(folderName + "\n");
-
-                        zipFiles((File[]) fileList.toArray(new File[fileList.size()]), outputFile);
+                        
+                        logger.info("Press Start" + folderName + ".");
+                        zipFiles((File[]) fileList.toArray(new File[fileList.size()]), outputFile, logger);
+                        logger.info("Press Finish" + folderName + ".");
 
                         // 清除数据
                         // 1. 删除压缩文件
+                        logger.info("Delete Source File Start.");
                         Queue<File> pressFolderList = new LinkedList<>(); // 父目录
                         for (int index = 0; index < fileList.size(); ++index) {
                             File deletedFile = fileList.get(index);
@@ -166,10 +175,11 @@ public final class App {
                             deletedFile.delete();
                         }
                         fileList.clear();
-                        System.out.print("文件清除" + "\n");
+                        logger.info("Delete Source File Finish.");
 
                         // 2. 检查文件夹是否为空
                         // 空则递归删除
+                        logger.info("Delete Empty Folder Start.");
                         while (!pressFolderList.isEmpty()) {
                             File manageFolderFile = pressFolderList.poll();
                             if (manageFolderFile.exists() && manageFolderFile != inputFolder) {
@@ -180,7 +190,7 @@ public final class App {
                                 }
                             }
                         }
-                        System.out.println("文件夹回收完成" + "\n");
+                        logger.info("Delete Folder Finish.");
                     }
                 }
             }
@@ -196,6 +206,18 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
+        String log4jPath = System.getProperty("user.dir") + "/log4j2.xml";
+        ConfigurationSource source = null;
+        try {
+            source = new ConfigurationSource(new FileInputStream(log4jPath));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Cannot find log4j2.xml");
+            return;
+        }
+        Configurator.initialize(null, source);
+        Logger logger = LogManager.getLogger("dailyLogger");
+
         String propertiesPath = "./config.properties";
         String inputPath = "";
         String outputPath = "";
@@ -210,10 +232,11 @@ public final class App {
             outputPath = properties.getProperty("outputPath");
             pressFileNum = Integer.parseInt(properties.getProperty("pressFileNum"));
         } catch (IOException e) {
+            logger.fatal("Fail Load Property File.");
             e.printStackTrace();
         }
 
-        int[] totalFilesNumber = traverseFolder(inputPath, outputPath, pressFileNum);
+        int[] totalFilesNumber = traverseFolder(inputPath, outputPath, pressFileNum, logger);
 
         System.out.println(
                 "manage file num: " + totalFilesNumber[0] + "\n" + "manage folder num: " + totalFilesNumber[1] + "\n");
